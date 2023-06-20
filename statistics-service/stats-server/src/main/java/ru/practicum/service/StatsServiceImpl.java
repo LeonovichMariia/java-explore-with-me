@@ -17,12 +17,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static ru.practicum.dto.Constants.DATE_TIME_PATTERN;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class StatsServiceImpl implements StatsService {
     private final EndpointHitsRepository endpointHitsRepository;
-    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
 
     @Override
     public void addHit(EndpointHitDto endpointHitDto) {
@@ -31,25 +33,23 @@ public class StatsServiceImpl implements StatsService {
     }
 
     @Override
-    public List<ViewStatsDto> getStats(String start, String end, String[] uris, Boolean unique) {
-        LocalDateTime parseStart = LocalDateTime.parse(start, FORMATTER);
-        LocalDateTime parseEnd = LocalDateTime.parse(end, FORMATTER);
-        if (parseEnd.isBefore(parseStart)) {
+    public List<ViewStatsDto> getStats(LocalDateTime start, LocalDateTime end, String[] uris, Boolean unique) {
+        if (end.isBefore(start)) {
             log.error("Дата окончания не может быть ранее даты начала");
             throw new BadRequestException("Дата окончания не может быть ранее даты начала");
         }
         List<ViewStats> result;
         if (uris == null) {
             if (unique) {
-                result = endpointHitsRepository.getStatsUnique(parseStart, parseEnd);
+                result = endpointHitsRepository.getStatsUnique(start, end);
             } else {
-                result = endpointHitsRepository.getAll(parseStart, parseEnd);
+                result = endpointHitsRepository.getAll(start, end);
             }
         } else {
             if (unique) {
-                result = endpointHitsRepository.getStatsUnique(parseStart, parseEnd, uris);
+                result = endpointHitsRepository.getStatsUnique(start, end, uris);
             } else {
-                result = endpointHitsRepository.getAll(parseStart, parseEnd, uris);
+                result = endpointHitsRepository.getAll(start, end, uris);
             }
         }
         return result.stream()
