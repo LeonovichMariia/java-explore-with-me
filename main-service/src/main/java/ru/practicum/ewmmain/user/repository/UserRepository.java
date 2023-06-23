@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import ru.practicum.ewmmain.exception.NotFoundException;
 import ru.practicum.ewmmain.user.model.User;
 
+import java.util.Optional;
+
 public interface UserRepository extends JpaRepository<User, Long> {
 
     default User validateUser(Long userId) {
@@ -14,4 +16,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     }
 
     Page<User> findUsersByIdsIn(Long[] ids, Pageable pageable);
+
+    Optional<User> checkIfAlreadyExist(String name);
 }

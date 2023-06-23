@@ -4,12 +4,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.ewmmain.exception.AlreadyExistException;
 import ru.practicum.ewmmain.user.dto.NewUserRequest;
 import ru.practicum.ewmmain.user.dto.UserDto;
 import ru.practicum.ewmmain.user.mapper.UserMapper;
 import ru.practicum.ewmmain.user.model.User;
 import ru.practicum.ewmmain.user.repository.UserRepository;
-import ru.practicum.ewmmain.user.utils.PageSetup;
+import ru.practicum.ewmmain.utils.PageSetup;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,8 +23,12 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
+    @Transactional
     public UserDto addUser(NewUserRequest newUserRequest) {
         User newUser = UserMapper.toUser(newUserRequest);
+        if (userRepository.checkIfAlreadyExist(newUser.getName()).isPresent()) {
+            throw new AlreadyExistException("Данное имя уже занято");
+        }
         UserDto savedUser = UserMapper.toUserDto(userRepository.save(newUser));
         log.info("Пользователь {} сохранен", savedUser);
         return savedUser;
@@ -42,6 +48,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void deleteUserById(Long userId) {
         userRepository.validateUser(userId);
         userRepository.deleteById(userId);

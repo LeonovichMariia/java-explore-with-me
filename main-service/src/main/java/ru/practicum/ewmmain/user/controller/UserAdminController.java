@@ -35,7 +35,7 @@ public class UserAdminController {
     public List<UserDto> getUsers(@RequestParam(required = false) Long[] ids,
                                   @RequestParam(defaultValue = "10") @Positive Integer size,
                                   @RequestParam(defaultValue = "0") @PositiveOrZero Integer from) {
-        log.info("Запрос на получение информации обо всех пользователях: ids {}, , from={}, size={}", ids, size, from);
+        log.info("Запрос на получение информации обо всех пользователях: ids {}, from={}, size={}", ids, size, from);
         return userService.getUsers(ids, size, from);
     }
 
