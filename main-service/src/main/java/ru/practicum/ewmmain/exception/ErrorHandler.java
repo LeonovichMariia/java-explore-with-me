@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.Map;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.time.LocalDateTime;
 
 @Slf4j
 @RestControllerAdvice
@@ -15,32 +17,56 @@ public class ErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, String> handleValidationException(MethodArgumentNotValidException e) {
+    public ApiError handleValidationException(MethodArgumentNotValidException e) {
         log.info("Ошибка 400!");
-        return Map.of("error", "Ошибка валидации",
-                "errorMessage", e.getMessage());
+        return new ApiError(
+                getAsString(e),
+                e.getMessage(),
+                "Неверно составлен запрос",
+                HttpStatus.BAD_REQUEST.name(),
+                LocalDateTime.now());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Map<String, String> handleNotFoundException(final NotFoundException e) {
+    public ApiError handleNotFoundException(final NotFoundException e) {
         log.info("Ошибка 404!");
-        return Map.of("error", "Искомый объект не найден",
-                "errorMessage", e.getMessage());
+        return new ApiError(
+                getAsString(e),
+                e.getMessage(),
+                "Искомый объект не найден",
+                HttpStatus.NOT_FOUND.name(),
+                LocalDateTime.now());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.CONFLICT)
-    public Map<String, String> handleAlreadyExistException(final AlreadyExistException e) {
+    public ApiError handleAlreadyExistException(final AlreadyExistException e) {
         log.info("Ошибка 409!");
-        return Map.of("error", "Такой объект уже существует",
-                "errorMessage", e.getMessage());
+        return new ApiError(
+                getAsString(e),
+                e.getMessage(),
+                "Такой объект уже существует",
+                HttpStatus.CONFLICT.name(),
+                LocalDateTime.now());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Map<String, String> handleThrowableException(final Throwable e) {
+    public ApiError handleThrowableException(final Exception e) {
         log.error("Ошибка 500! {}", e.toString());
-        return Map.of("error", "Internal Server Error");
+        return new ApiError(
+                getAsString(e),
+                e.getMessage(),
+                "Необрабатываемое исключение",
+                HttpStatus.INTERNAL_SERVER_ERROR.name(),
+                LocalDateTime.now());
+    }
+
+    private String getAsString(Exception ex) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        ex.printStackTrace(pw);
+        return sw.toString();
     }
 }

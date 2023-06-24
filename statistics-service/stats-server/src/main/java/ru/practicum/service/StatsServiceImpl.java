@@ -24,7 +24,6 @@ import static ru.practicum.dto.Constants.DATE_TIME_PATTERN;
 @RequiredArgsConstructor
 public class StatsServiceImpl implements StatsService {
     private final EndpointHitsRepository endpointHitsRepository;
-    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
 
     @Override
     public void addHit(EndpointHitDto endpointHitDto) {
