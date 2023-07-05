@@ -56,7 +56,7 @@ public class EventMapper {
                 .views(event.getViews())
                 .build();
     }
-    
+
     public EventShortDto toEventShortDto(Event event) {
         return EventShortDto.builder()
                 .id(event.getId())

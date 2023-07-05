@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 public class CompilationServiceImpl implements CompilationService {
     private final CompilationRepository compilationRepository;
     private final EventRepository eventRepository;
+
     @Override
     @Transactional
     public CompilationDto addCompilation(NewCompilationDto newCompilationDto) {
@@ -69,7 +70,7 @@ public class CompilationServiceImpl implements CompilationService {
         PageRequest pageable = new PageSetup(from, size, Sort.unsorted());
         if (pinned) {
             compilations = compilationRepository.findAllByPinned(pinned, pageable);
-        } else  {
+        } else {
             compilations = compilationRepository.findAll(pageable).getContent();
         }
         return compilations.stream()

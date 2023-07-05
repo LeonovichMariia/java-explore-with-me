@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> getUsers(Long[] ids, Integer size, Integer from) {
         log.info("Получение списка всех пользователей");
-        if(ids == null) {
+        if (ids == null) {
             return userRepository.findAll(new PageSetup(from, size)).stream()
                     .map(UserMapper::toUserDto)
                     .collect(Collectors.toList());
