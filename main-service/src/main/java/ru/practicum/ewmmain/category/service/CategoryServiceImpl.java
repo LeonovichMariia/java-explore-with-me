@@ -55,7 +55,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public List<CategoryDto> getCategories(Integer size, Integer from) {
         log.info("Получение списка всех категорий");
         return categoryRepository.findAll(new PageSetup(from, size, Sort.by(Sort.Direction.DESC, "id"))).stream()
@@ -64,7 +64,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public CategoryDto getCategoryById(Long catId) {
         log.info("Получение информации о категории с id {}", catId);
         Category category = validateCategory(catId);

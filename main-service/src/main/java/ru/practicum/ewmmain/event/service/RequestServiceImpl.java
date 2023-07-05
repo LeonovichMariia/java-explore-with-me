@@ -53,7 +53,7 @@ public class RequestServiceImpl implements RequestService {
             log.error("Превышен лимит возможных участников");
             throw new ParticipantLimitException("Превышен лимит возможных участников");
         }
-        RequestStatus requestStatus =  (!event.getRequestModeration() || event.getParticipantLimit() == 0)
+        RequestStatus requestStatus = (!event.getRequestModeration() || event.getParticipantLimit() == 0)
                 ? RequestStatus.CONFIRMED : RequestStatus.PENDING;
         Request request = Request.builder()
                 .created(LocalDateTime.now())
@@ -67,7 +67,7 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public List<ParticipationRequestDto> getEventRequestsPrivate(Long userId) {
         log.info("Получение информации о заявках от пользователя с id {} в чужих событиях", userId);
         validateUser(userId);
@@ -159,11 +159,11 @@ public class RequestServiceImpl implements RequestService {
         eventRepository.save(event);
         return new EventRequestStatusUpdateResult(
                 confirmedRequests.stream()
-                .map(RequestMapper::toParticipationRequestDto)
-                .collect(Collectors.toList()),
+                        .map(RequestMapper::toParticipationRequestDto)
+                        .collect(Collectors.toList()),
                 rejectedRequests.stream()
-                .map(RequestMapper::toParticipationRequestDto)
-                .collect(Collectors.toList()));
+                        .map(RequestMapper::toParticipationRequestDto)
+                        .collect(Collectors.toList()));
     }
 
     private void checkStatusPending(List<Request> requests) {
@@ -176,7 +176,7 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public List<ParticipationRequestDto> getEventRequests(Long userId, Long eventId) {
         log.info("Получение информации о запросах на участие в событии с id {} пользователя с id {}", eventId, userId);
         validateUser(userId);

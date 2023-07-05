@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public List<UserDto> getUsers(Long[] ids, Integer size, Integer from) {
         log.info("Получение списка всех пользователей");
         if (ids == null) {

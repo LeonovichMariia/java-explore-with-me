@@ -63,7 +63,7 @@ public class CompilationServiceImpl implements CompilationService {
     }
 
     @Override
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public List<CompilationDto> getCompilations(Boolean pinned, Integer size, Integer from) {
         log.info("Получение списка всех подборок событий");
         List<Compilation> compilations;
@@ -79,7 +79,7 @@ public class CompilationServiceImpl implements CompilationService {
     }
 
     @Override
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public CompilationDto getCompilationById(Long compId) {
         log.info("Получение информации о подборке событий с id {}", compId);
         Compilation compilation = validateCompilation(compId);

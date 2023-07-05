@@ -20,7 +20,6 @@ import ru.practicum.ewmmain.event.enums.EventState;
 import ru.practicum.ewmmain.event.mapper.EventMapper;
 import ru.practicum.ewmmain.event.model.Event;
 import ru.practicum.ewmmain.event.model.QEvent;
-import ru.practicum.ewmmain.event.model.Request;
 import ru.practicum.ewmmain.event.repository.EventRepository;
 import ru.practicum.ewmmain.event.repository.RequestRepository;
 import ru.practicum.ewmmain.exception.ConflictException;
@@ -118,7 +117,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public List<EventFullDto> getEventsFullAdmin(EventRequestsParams parameters, Integer from, Integer size) {
         log.info("Поиск событий по параметрам");
         PageRequest pageRequest = PageRequest.of(from, size);
@@ -205,7 +204,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public List<EventShortDto> getEventsPrivate(Long userId, Integer size, Integer from) {
         log.info("Получение событий, добавленных пользователем с id {}, from={}, size={}", userId, from, size);
         validateUser(userId);
@@ -217,7 +216,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public EventFullDto getEventByIdPrivate(Long userId, Long eventId) {
         log.info("Получение полной информации о событии с id {}, добавленных пользователем с id {}", eventId, userId);
         validateUser(userId);
@@ -227,7 +226,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public List<EventShortDto> getEventsPublic(String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart,
                                                LocalDateTime rangeEnd, Boolean onlyAvailable, String sort, Integer from,
                                                Integer size, HttpServletRequest request) {
@@ -271,7 +270,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public EventFullDto getEventByIdPublic(Long id, HttpServletRequest httpServletRequest) {
         log.info("Получение полной информации о событии с id {}", id);
         Event event = validateEvent(id);
