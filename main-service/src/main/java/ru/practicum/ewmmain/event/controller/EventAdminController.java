@@ -32,8 +32,8 @@ public class EventAdminController {
     public List<EventFullDto> getEventsFullByAdmin(@RequestParam(required = false) List<Long> users,
                                                    @RequestParam(required = false) List<EventState> states,
                                                    @RequestParam(required = false) List<Long> categories,
-                                                   @RequestParam(required = false) @DateTimeFormat(pattern = Constants.PATTERN) LocalDateTime rangeStart,
-                                                   @RequestParam(required = false) @DateTimeFormat(pattern = Constants.PATTERN) LocalDateTime rangeEnd,
+                                                   @RequestParam(required = false) @DateTimeFormat(pattern = Constants.pattern) LocalDateTime rangeStart,
+                                                   @RequestParam(required = false) @DateTimeFormat(pattern = Constants.pattern) LocalDateTime rangeEnd,
                                                    @RequestParam(name = "size", defaultValue = "10") @Positive Integer size,
                                                    @RequestParam(name = "from", defaultValue = "0") @PositiveOrZero Integer from) {
         EventRequestsParams eventRequestsParams = EventRequestsParams.builder()

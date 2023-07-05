@@ -18,6 +18,6 @@ public class ApiError {
     private String message;
     private String reason;
     private String status;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.PATTERN)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.pattern)
     public LocalDateTime timestamp;
 }

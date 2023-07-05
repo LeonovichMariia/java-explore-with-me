@@ -24,7 +24,7 @@ public class NewEventDto {
     @NotBlank(message = "Описание не может быть пустым")
     @Size(min = 20, max = 7000, message = "Описание должно содержать не менее 20 и не более 7000 символов")
     private String description;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.PATTERN)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.pattern)
     private LocalDateTime eventDate;
     @NotNull
     private Location location;
