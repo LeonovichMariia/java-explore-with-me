@@ -3,16 +3,13 @@ package ru.practicum.ewmmain.event.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.practicum.ewmmain.event.enums.RequestStatus;
 import ru.practicum.ewmmain.event.model.Request;
-import ru.practicum.ewmmain.exception.NotFoundException;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface RequestRepository extends JpaRepository<Request, Long> {
 
-    default Request validateRequest(Long requestId) {
-        return findById(requestId).orElseThrow(() -> new NotFoundException(
-                "Запрос с id " + requestId + " не найден"));
-    }
+    Optional<Request> findRequestById(Long requestId);
 
     Boolean existsByRequesterIdAndEventId(Long userId, Long eventId);
 

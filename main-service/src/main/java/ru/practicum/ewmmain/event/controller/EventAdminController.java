@@ -3,7 +3,6 @@ package ru.practicum.ewmmain.event.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.dto.Constants;
@@ -28,7 +27,6 @@ public class EventAdminController {
     private final EventService eventService;
 
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
     public List<EventFullDto> getEventsFullByAdmin(@RequestParam(required = false) List<Long> users,
                                                    @RequestParam(required = false) List<EventState> states,
                                                    @RequestParam(required = false) List<Long> categories,
@@ -48,7 +46,6 @@ public class EventAdminController {
     }
 
     @PatchMapping("/{eventId}")
-    @ResponseStatus(HttpStatus.OK)
     public EventFullDto renewalEventByAdmin(@RequestBody @Valid UpdateEventAdminRequest updateEventAdminRequest,
                                             @PathVariable Long eventId) {
         log.info("Запрос на обновление события {}", updateEventAdminRequest);

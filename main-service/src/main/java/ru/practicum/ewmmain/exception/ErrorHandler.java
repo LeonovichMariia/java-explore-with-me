@@ -56,10 +56,10 @@ public class ErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiError handleThrowableException(final Exception e) {
+    public ApiError handleThrowableException(final Throwable e) {
         log.error("Ошибка 500! {}", e.toString());
         return new ApiError(
-                getAsString(e),
+                getAsString((Exception) e),
                 e.getMessage(),
                 "Необрабатываемое исключение",
                 HttpStatus.INTERNAL_SERVER_ERROR.name(),

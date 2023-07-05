@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.clent.StatsClient;
 import ru.practicum.dto.Constants;
 import ru.practicum.dto.EndpointHitDto;
@@ -19,6 +20,7 @@ import ru.practicum.ewmmain.event.enums.EventState;
 import ru.practicum.ewmmain.event.mapper.EventMapper;
 import ru.practicum.ewmmain.event.model.Event;
 import ru.practicum.ewmmain.event.model.QEvent;
+import ru.practicum.ewmmain.event.model.Request;
 import ru.practicum.ewmmain.event.repository.EventRepository;
 import ru.practicum.ewmmain.event.repository.RequestRepository;
 import ru.practicum.ewmmain.exception.ConflictException;
@@ -31,13 +33,13 @@ import ru.practicum.ewmmain.utils.EventRequestsParams;
 import ru.practicum.ewmmain.utils.PageSetup;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Service
+@Transactional
 public class EventServiceImpl implements EventService {
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
@@ -56,20 +58,8 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<EventFullDto> getEventsFullAdmin(EventRequestsParams parameters, Integer from, Integer size) {
-        log.info("Поиск событий по параметрам");
-        PageRequest pageRequest = PageRequest.of(from, size);
-        BooleanBuilder predicate = getAdminPredicate(parameters);
-        List<Event> events = eventRepository.findAll(predicate, pageRequest).getContent();
-        return events.stream()
-                .map(EventMapper::toEventFullDto)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    @Transactional
     public EventFullDto renewalEventAdmin(UpdateEventAdminRequest updateEventAdminRequest, Long eventId) {
-        Event event = eventRepository.validateEvent(eventId);
+        Event event = validateEvent(eventId);
         if (updateEventAdminRequest.getAnnotation() != null) {
             event.setAnnotation(updateEventAdminRequest.getAnnotation());
         }
@@ -77,7 +67,7 @@ public class EventServiceImpl implements EventService {
             event.setDescription(updateEventAdminRequest.getDescription());
         }
         if (updateEventAdminRequest.getCategory() != null) {
-            Category category = categoryRepository.validateCategory(updateEventAdminRequest.getCategory());
+            Category category = validateCategory(updateEventAdminRequest.getCategory());
             event.setCategory(category);
         }
         if (updateEventAdminRequest.getEventDate() != null) {
@@ -128,25 +118,35 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly=true)
+    public List<EventFullDto> getEventsFullAdmin(EventRequestsParams parameters, Integer from, Integer size) {
+        log.info("Поиск событий по параметрам");
+        PageRequest pageRequest = PageRequest.of(from, size);
+        BooleanBuilder predicate = getAdminPredicate(parameters);
+        List<Event> events = eventRepository.findAll(predicate, pageRequest).getContent();
+        return events.stream()
+                .map(EventMapper::toEventFullDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public EventFullDto addEventPrivate(NewEventDto newEventDto, Long userId) {
         if (newEventDto.getEventDate().isBefore(LocalDateTime.now().plusHours(2))) {
             log.error("Событие не может начаться раньше, чем через 2 часа от текущего времени");
             throw new ValidationException("Событие не может начаться раньше, чем через 2 часа от текущего времени");
         }
-        User user = userRepository.validateUser(userId);
-        Category category = categoryRepository.validateCategory(newEventDto.getCategory());
+        User user = validateUser(userId);
+        Category category = validateCategory(newEventDto.getCategory());
         Event event = EventMapper.toEvent(newEventDto, category, user);
         EventFullDto eventFullDto = EventMapper.toEventFullDto(eventRepository.save(event));
-        log.info("Событие с id {} сохранено", eventFullDto.getId());
+        log.info("Событие с id {} сохранено", eventFullDto.getEventShortDto().getId());
         return eventFullDto;
     }
 
     @Override
-    @Transactional
     public EventFullDto renewalEventPrivate(UpdateEventUserRequest updateEventUserRequest, Long userId, Long eventId) {
-        userRepository.validateUser(userId);
-        Event event = eventRepository.validateEvent(eventId);
+        validateUser(userId);
+        Event event = validateEvent(eventId);
         if (!event.getInitiator().getId().equals(userId)) {
             log.error("Только организатор может менять двнные события запроса");
             throw new WrongUserException("Только организатор может менять данные события");
@@ -167,7 +167,7 @@ public class EventServiceImpl implements EventService {
             event.setAnnotation(updateEventUserRequest.getAnnotation());
         }
         if (updateEventUserRequest.getCategory() != null) {
-            Category category = categoryRepository.validateCategory(updateEventUserRequest.getCategory());
+            Category category = validateCategory(updateEventUserRequest.getCategory());
             event.setCategory(category);
         }
         if (updateEventUserRequest.getDescription() != null) {
@@ -205,9 +205,10 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional(readOnly=true)
     public List<EventShortDto> getEventsPrivate(Long userId, Integer size, Integer from) {
         log.info("Получение событий, добавленных пользователем с id {}, from={}, size={}", userId, from, size);
-        userRepository.validateUser(userId);
+        validateUser(userId);
         PageRequest pageRequest = new PageSetup(from, size, Sort.unsorted());
         List<Event> events = eventRepository.findAllByInitiatorId(userId, pageRequest).getContent();
         return events.stream()
@@ -216,15 +217,17 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional(readOnly=true)
     public EventFullDto getEventByIdPrivate(Long userId, Long eventId) {
         log.info("Получение полной информации о событии с id {}, добавленных пользователем с id {}", eventId, userId);
-        userRepository.validateUser(userId);
-        Event event = eventRepository.findByIdAndInitiatorId(eventId, userId);
+        validateUser(userId);
+        Event event = validateEvent(eventId);
         EventFullDto eventFullDto = EventMapper.toEventFullDto(event);
         return eventFullDto;
     }
 
     @Override
+    @Transactional(readOnly=true)
     public List<EventShortDto> getEventsPublic(String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart,
                                                LocalDateTime rangeEnd, Boolean onlyAvailable, String sort, Integer from,
                                                Integer size, HttpServletRequest request) {
@@ -268,9 +271,10 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional(readOnly=true)
     public EventFullDto getEventByIdPublic(Long id, HttpServletRequest httpServletRequest) {
         log.info("Получение полной информации о событии с id {}", id);
-        Event event = eventRepository.validateEvent(id);
+        Event event = validateEvent(id);
         if (!event.getState().equals(EventState.PUBLISHED)) {
             log.error("Событие не найдено");
             throw new NotFoundException("Событие не найдено");
@@ -325,5 +329,20 @@ public class EventServiceImpl implements EventService {
                 .timestamp(LocalDateTime.now())
                 .build();
         client.addHit(endpointHitDto);
+    }
+
+    private User validateUser(Long userId) {
+        return userRepository.findUserById(userId).orElseThrow(() -> new NotFoundException(
+                "Пользователь с id " + userId + " не найден"));
+    }
+
+    private Event validateEvent(Long eventId) {
+        return eventRepository.findEventById(eventId).orElseThrow(() -> new NotFoundException(
+                "Событие с id " + eventId + " не найдено"));
+    }
+
+    private Category validateCategory(Long catId) {
+        return categoryRepository.findCategoryById(catId).orElseThrow(() -> new NotFoundException(
+                "Категория с id " + catId + " не найдена"));
     }
 }

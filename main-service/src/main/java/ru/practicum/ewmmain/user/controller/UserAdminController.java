@@ -30,7 +30,6 @@ public class UserAdminController {
     }
 
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
     public List<UserDto> getUsers(@RequestParam(required = false) Long[] ids,
                                   @RequestParam(name = "size", defaultValue = "10") @Positive Integer size,
                                   @RequestParam(name = "from", defaultValue = "0") @PositiveOrZero Integer from) {

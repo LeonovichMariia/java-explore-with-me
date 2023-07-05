@@ -31,7 +31,6 @@ public class EventPrivateController {
     }
 
     @PatchMapping("/{eventId}")
-    @ResponseStatus(HttpStatus.OK)
     public EventFullDto renewalEventPrivate(@RequestBody @Valid UpdateEventUserRequest updateEventUserRequest,
                                             @PathVariable Long userId,
                                             @PathVariable Long eventId) {
@@ -40,7 +39,6 @@ public class EventPrivateController {
     }
 
     @PatchMapping("/{eventId}/requests")
-    @ResponseStatus(HttpStatus.OK)
     public EventRequestStatusUpdateResult renewalEventRequest(@RequestBody EventRequestStatusUpdateRequest eventRequestStatusUpdateRequest,
                                                               @PathVariable Long userId,
                                                               @PathVariable Long eventId) {
@@ -49,7 +47,6 @@ public class EventPrivateController {
     }
 
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
     public List<EventShortDto> getEventsPrivate(@PathVariable Long userId,
                                                 @RequestParam(name = "size", defaultValue = "10") @Positive Integer size,
                                                 @RequestParam(name = "from", defaultValue = "0") @PositiveOrZero Integer from) {
@@ -58,14 +55,12 @@ public class EventPrivateController {
     }
 
     @GetMapping("/{eventId}")
-    @ResponseStatus(HttpStatus.OK)
     public EventFullDto getEventByIdPrivate(@PathVariable Long userId,@PathVariable Long eventId) {
         log.info("Запрос на получение информации о событии с id {} от пользователя с id {}", eventId, userId);
         return eventService.getEventByIdPrivate(userId, eventId);
     }
 
     @GetMapping("/{eventId}/requests")
-    @ResponseStatus(HttpStatus.OK)
     public List<ParticipationRequestDto> getEventRequests(@PathVariable Long userId, @PathVariable Long eventId) {
         log.info("Запрос на получение информации о запросах на участие в событии с id {} от пользователя с id {}", eventId, userId);
         return requestService.getEventRequests(userId, eventId);

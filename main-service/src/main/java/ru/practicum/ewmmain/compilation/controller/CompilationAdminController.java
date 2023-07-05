@@ -26,7 +26,6 @@ public class CompilationAdminController {
     }
 
     @PatchMapping("/{compId}")
-    @ResponseStatus(HttpStatus.OK)
     public CompilationDto renewalCompilation(@Valid @RequestBody UpdateCompilationRequest updateCompilationRequest,
                                              @PathVariable Long compId) {
         log.info("Запрос на обновление подборки событий {}", updateCompilationRequest);

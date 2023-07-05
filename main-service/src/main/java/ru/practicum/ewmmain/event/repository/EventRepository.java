@@ -8,7 +8,6 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 import ru.practicum.ewmmain.event.enums.EventState;
 import ru.practicum.ewmmain.event.model.Event;
-import ru.practicum.ewmmain.exception.NotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,10 +16,7 @@ import java.util.Optional;
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long>, QuerydslPredicateExecutor<Event> {
 
-    default Event validateEvent(Long eventId) {
-        return findById(eventId).orElseThrow(() -> new NotFoundException(
-                "Событие с id " + eventId + " не найдено"));
-    }
+    Optional<Event> findEventById(Long eventId);
 
     List<Event> findAllByIdIn(List<Long> eventId);
 

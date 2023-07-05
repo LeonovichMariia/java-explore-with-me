@@ -24,14 +24,12 @@ public class RequestPrivateController {
     }
 
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
     public List<ParticipationRequestDto> getEventRequestsPrivate(@PathVariable Long userId) {
         log.info("Запрос на получение информации от пользователя с id {} на участие в чужих событиях", userId);
         return requestService.getEventRequestsPrivate(userId);
     }
 
     @PatchMapping("/{requestId}/cancel")
-    @ResponseStatus(HttpStatus.OK)
     public ParticipationRequestDto cancelEventRequest(@PathVariable Long userId, @PathVariable Long requestId) {
         log.info("Запрос на отмену запроса с id {} от пользователя с id {} на участие в событии ", requestId, userId);
         return requestService.cancelEventRequest(userId, requestId);

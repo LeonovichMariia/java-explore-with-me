@@ -38,22 +38,14 @@ public class EventMapper {
 
     public EventFullDto toEventFullDto(Event event) {
         return EventFullDto.builder()
-                .id(event.getId())
-                .annotation(event.getAnnotation())
-                .category(CategoryMapper.toCategoryDto(event.getCategory()))
-                .confirmedRequests(event.getConfirmedRequests())
+                .eventShortDto(toEventShortDto(event))
                 .createdOn(event.getCreatedOn())
-                .eventDate(event.getEventDate())
                 .description(event.getDescription())
-                .initiator(UserMapper.toUserShortDto(event.getInitiator()))
                 .location(new Location(event.getLat(), event.getLon()))
-                .paid(event.getPaid())
                 .participantLimit(event.getParticipantLimit())
                 .publishedOn(event.getPublishedOn())
                 .requestModeration(event.getRequestModeration())
                 .state(event.getState())
-                .title(event.getTitle())
-                .views(event.getViews())
                 .build();
     }
 

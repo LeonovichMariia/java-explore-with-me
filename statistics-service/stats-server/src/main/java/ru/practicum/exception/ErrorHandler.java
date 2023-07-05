@@ -24,7 +24,7 @@ public class ErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Map<String, String> handleThrowableException(final Exception e) {
+    public Map<String, String> handleThrowableException(final Throwable e) {
         log.error("Ошибка 500! {}", e.toString());
         return Map.of("error", "Internal Server Error");
     }

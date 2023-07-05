@@ -13,6 +13,7 @@ import ru.practicum.ewmmain.compilation.mapper.CompilationMapper;
 import ru.practicum.ewmmain.compilation.model.Compilation;
 import ru.practicum.ewmmain.compilation.repository.CompilationRepository;
 import ru.practicum.ewmmain.event.repository.EventRepository;
+import ru.practicum.ewmmain.exception.NotFoundException;
 import ru.practicum.ewmmain.utils.PageSetup;
 
 import java.util.List;
@@ -20,13 +21,13 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class CompilationServiceImpl implements CompilationService {
     private final CompilationRepository compilationRepository;
     private final EventRepository eventRepository;
 
     @Override
-    @Transactional
     public CompilationDto addCompilation(NewCompilationDto newCompilationDto) {
         Compilation newCompilation = CompilationMapper.toCompilation(newCompilationDto);
         if (newCompilationDto.getEvents() != null)
@@ -37,9 +38,8 @@ public class CompilationServiceImpl implements CompilationService {
     }
 
     @Override
-    @Transactional
     public CompilationDto renewalCompilation(UpdateCompilationRequest updateCompilationRequest, Long compId) {
-        Compilation compilation = compilationRepository.validateCompilation(compId);
+        Compilation compilation = validateCompilation(compId);
         if (updateCompilationRequest.getPinned() != null) {
             compilation.setPinned(updateCompilationRequest.getPinned());
         }
@@ -55,15 +55,15 @@ public class CompilationServiceImpl implements CompilationService {
     }
 
     @Override
-    @Transactional
     public void deleteCompilationById(Long compId) {
-        compilationRepository.validateCompilation(compId);
+        validateCompilation(compId);
         compilationRepository.deleteById(compId);
         log.info("Подборка событий с id {} удалена", compId);
 
     }
 
     @Override
+    @Transactional(readOnly=true)
     public List<CompilationDto> getCompilations(Boolean pinned, Integer size, Integer from) {
         log.info("Получение списка всех подборок событий");
         List<Compilation> compilations;
@@ -79,9 +79,15 @@ public class CompilationServiceImpl implements CompilationService {
     }
 
     @Override
+    @Transactional(readOnly=true)
     public CompilationDto getCompilationById(Long compId) {
         log.info("Получение информации о подборке событий с id {}", compId);
-        Compilation compilation = compilationRepository.validateCompilation(compId);
+        Compilation compilation = validateCompilation(compId);
         return CompilationMapper.toCompilationDto(compilation);
+    }
+
+    private Compilation validateCompilation(Long compId) {
+        return compilationRepository.findCompilationById(compId).orElseThrow(() -> new NotFoundException(
+                "Подборка событий с id " + compId + " не найдена"));
     }
 }
