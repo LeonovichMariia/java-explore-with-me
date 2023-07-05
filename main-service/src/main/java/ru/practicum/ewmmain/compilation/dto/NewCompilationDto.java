@@ -15,7 +15,7 @@ import java.util.List;
 @Builder(toBuilder = true)
 public class NewCompilationDto {
     private List<Long> events;
-    private Boolean pinned;
+    private Boolean pinned = false;
     @NotBlank(message = "Заголовок не может быть пустым")
     @Size(min = 1, max = 50, message = "Заголовок должен содержать не менее 1 и не более 50 символов")
     private String title;

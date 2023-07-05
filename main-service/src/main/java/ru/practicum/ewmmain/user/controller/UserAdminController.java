@@ -7,14 +7,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewmmain.user.dto.NewUserRequest;
 import ru.practicum.ewmmain.user.dto.UserDto;
-import ru.practicum.ewmmain.user.mapper.UserMapper;
 import ru.practicum.ewmmain.user.service.UserService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Validated
@@ -32,9 +30,10 @@ public class UserAdminController {
     }
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public List<UserDto> getUsers(@RequestParam(required = false) Long[] ids,
-                                  @RequestParam(defaultValue = "10") @Positive Integer size,
-                                  @RequestParam(defaultValue = "0") @PositiveOrZero Integer from) {
+                                  @RequestParam(name = "size", defaultValue = "10") @Positive Integer size,
+                                  @RequestParam(name = "from", defaultValue = "0") @PositiveOrZero Integer from) {
         log.info("Запрос на получение информации обо всех пользователях: ids {}, from={}, size={}", ids, size, from);
         return userService.getUsers(ids, size, from);
     }

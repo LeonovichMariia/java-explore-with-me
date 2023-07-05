@@ -27,6 +27,7 @@ public class CategoryAdminController {
     }
 
     @PatchMapping("/{catId}")
+    @ResponseStatus(HttpStatus.OK)
     public CategoryDto renewalCategory(@PathVariable Long catId, @RequestBody @Valid NewCategoryDto newCategoryDto) {
         log.info("Запрос на обновление категории {}", newCategoryDto);
         return categoryService.renewalCategory(catId, newCategoryDto);

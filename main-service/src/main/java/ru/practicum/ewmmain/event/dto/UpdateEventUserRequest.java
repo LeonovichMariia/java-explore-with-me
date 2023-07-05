@@ -21,7 +21,7 @@ public class UpdateEventUserRequest {
     @Size(min = 20, max = 2000, message = "Аннотация должна содержать не менее 20 и не более 2000 символов")
     private String annotation;
     private Long category;
-    @Size(min = 20, max = 7000, message = "Описание должно содержать не менее 20 и не более 2000 символов")
+    @Size(min = 20, max = 7000, message = "Описание должно содержать не менее 20 и не более 7000 символов")
     private String description;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.DATE_TIME_PATTERN)
     private LocalDateTime eventDate;

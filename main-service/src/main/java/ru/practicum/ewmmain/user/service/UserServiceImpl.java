@@ -2,10 +2,8 @@ package ru.practicum.ewmmain.user.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.practicum.ewmmain.exception.AlreadyExistException;
 import ru.practicum.ewmmain.user.dto.NewUserRequest;
 import ru.practicum.ewmmain.user.dto.UserDto;
 import ru.practicum.ewmmain.user.mapper.UserMapper;
@@ -26,9 +24,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserDto addUser(NewUserRequest newUserRequest) {
         User newUser = UserMapper.toUser(newUserRequest);
-        if (userRepository.checkIfAlreadyExist(newUser.getName()).isPresent()) {
-            throw new AlreadyExistException("Данное имя уже занято");
-        }
         UserDto savedUser = UserMapper.toUserDto(userRepository.save(newUser));
         log.info("Пользователь {} сохранен", savedUser);
         return savedUser;
@@ -38,11 +33,11 @@ public class UserServiceImpl implements UserService {
     public List<UserDto> getUsers(Long[] ids, Integer size, Integer from) {
         log.info("Получение списка всех пользователей");
         if(ids == null) {
-            return userRepository.findAll(new PageSetup(from, size, Sort.by(Sort.Direction.DESC, "id"))).stream()
+            return userRepository.findAll(new PageSetup(from, size)).stream()
                     .map(UserMapper::toUserDto)
                     .collect(Collectors.toList());
         }
-        return userRepository.findUsersByIdsIn(ids, new PageSetup(from, size, Sort.by(Sort.Direction.DESC, "id"))).stream()
+        return userRepository.findUsersByIdIn(ids, new PageSetup(from, size)).stream()
                 .map(UserMapper::toUserDto)
                 .collect(Collectors.toList());
     }

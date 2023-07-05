@@ -1,8 +1,11 @@
 package ru.practicum.ewmmain.exception;
 
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -60,6 +63,114 @@ public class ErrorHandler {
                 e.getMessage(),
                 "Необрабатываемое исключение",
                 HttpStatus.INTERNAL_SERVER_ERROR.name(),
+                LocalDateTime.now());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ApiError handleCategoryIsNotEmptyException(final CategoryIsNotEmptyException e) {
+        log.info("Ошибка 409!");
+        return new ApiError(
+                getAsString(e),
+                e.getMessage(),
+                "У категории есть связанные события",
+                HttpStatus.CONFLICT.name(),
+                LocalDateTime.now());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ApiError handleWrongUserException(final WrongUserException e) {
+        log.info("Ошибка 409!");
+        return new ApiError(
+                getAsString(e),
+                e.getMessage(),
+                "Запрос на участие в собственном событии",
+                HttpStatus.CONFLICT.name(),
+                LocalDateTime.now());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ApiError handleEventIsNotPublishedException(final EventIsNotPublishedException e) {
+        log.info("Ошибка 409!");
+        return new ApiError(
+                getAsString(e),
+                e.getMessage(),
+                "Событие не опубликовано",
+                HttpStatus.CONFLICT.name(),
+                LocalDateTime.now());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ApiError handleParticipantLimitException(final ParticipantLimitException e) {
+        log.info("Ошибка 409!");
+        return new ApiError(
+                getAsString(e),
+                e.getMessage(),
+                "Достигнут лимит возможных участников",
+                HttpStatus.CONFLICT.name(),
+                LocalDateTime.now());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ApiError handleConflictException(final ConflictException e) {
+        log.info("Ошибка 409!");
+        return new ApiError(
+                getAsString(e),
+                e.getMessage(),
+                "Несовпадение значений",
+                HttpStatus.CONFLICT.name(),
+                LocalDateTime.now());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ApiError handleConstraintViolationException(final ConstraintViolationException e) {
+        log.info("Ошибка 409!");
+        return new ApiError(
+                getAsString(e),
+                e.getMessage(),
+                "Constraint violation exception",
+                HttpStatus.CONFLICT.name(),
+                LocalDateTime.now());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ApiError handleDataIntegrityViolationException(final DataIntegrityViolationException e) {
+        log.info("Ошибка 409!");
+        return new ApiError(
+                getAsString(e),
+                e.getMessage(),
+                "Integrity constraint has been violated",
+                HttpStatus.CONFLICT.name(),
+                LocalDateTime.now());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handleValidationException(final ValidationException e) {
+        log.info("Ошибка 400!");
+        return new ApiError(
+                getAsString(e),
+                e.getMessage(),
+                "Ошибка валидации данных",
+                HttpStatus.BAD_REQUEST.name(),
+                LocalDateTime.now());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handleValidationException(MissingServletRequestParameterException e) {
+        log.info("Ошибка 400!");
+        return new ApiError(
+                getAsString(e),
+                e.getMessage(),
+                "Missing servlet request parameter exception",
+                HttpStatus.BAD_REQUEST.name(),
                 LocalDateTime.now());
     }
 

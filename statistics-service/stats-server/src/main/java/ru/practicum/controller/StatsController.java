@@ -30,8 +30,8 @@ public class StatsController {
     @GetMapping("/stats")
     public List<ViewStatsDto> getStats(@RequestParam(name = "start") @DateTimeFormat(pattern = Constants.DATE_TIME_PATTERN) LocalDateTime start,
                                        @RequestParam(name = "end") @DateTimeFormat(pattern = Constants.DATE_TIME_PATTERN) LocalDateTime end,
-                                       @RequestParam(name = "uris", required = false) String[] uris,
-                                       @RequestParam(name = "unique", defaultValue = "false") Boolean unique) {
+                                       @RequestParam(name = "uris", required = false) List<String> uris,
+                                       @RequestParam(name = "unique", defaultValue = "false", required = false) Boolean unique) {
         log.info("Запрос на получение статистики по посещениям с {} по {}", start, end);
         return statsService.getStats(start, end, uris, unique);
     }

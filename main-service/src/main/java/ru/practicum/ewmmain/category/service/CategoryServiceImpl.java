@@ -10,7 +10,8 @@ import ru.practicum.ewmmain.category.dto.NewCategoryDto;
 import ru.practicum.ewmmain.category.mapper.CategoryMapper;
 import ru.practicum.ewmmain.category.model.Category;
 import ru.practicum.ewmmain.category.repository.CategoryRepository;
-import ru.practicum.ewmmain.exception.AlreadyExistException;
+import ru.practicum.ewmmain.event.repository.EventRepository;
+import ru.practicum.ewmmain.exception.CategoryIsNotEmptyException;
 import ru.practicum.ewmmain.utils.PageSetup;
 
 import java.util.List;
@@ -21,13 +22,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
+    private final EventRepository eventRepository;
     @Override
     @Transactional
     public CategoryDto addCategory(NewCategoryDto newCategoryDto) {
         Category newCategory = CategoryMapper.toCategory(newCategoryDto);
-        if (categoryRepository.checkIfAlreadyExist(newCategory.getName()).isPresent()) {
-            throw new AlreadyExistException("Данная категория уже существует");
-        }
         CategoryDto savedCategory = CategoryMapper.toCategoryDto(categoryRepository.save(newCategory));
         log.info("Категория {} сохранена", savedCategory);
         return savedCategory;
@@ -37,9 +36,6 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     public CategoryDto renewalCategory(Long catId, NewCategoryDto newCategoryDto) {
         Category category = categoryRepository.validateCategory(catId);
-        if (category.getName().equals(newCategoryDto.getName())) {
-            throw new AlreadyExistException("Данная категория уже существует");
-        }
         category.setName(newCategoryDto.getName());
         CategoryDto updatedCategory = CategoryMapper.toCategoryDto(categoryRepository.save(category));
         log.info("Категория с id {} обновлена", catId);
@@ -50,6 +46,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     public void deleteCategoryById(Long catId) {
         categoryRepository.validateCategory(catId);
+        if (!eventRepository.findByCategoryId(catId).isEmpty()) {
+            log.error("У данной категории имеются связанные с ней события");
+            throw new CategoryIsNotEmptyException("У данной категории имеются связанные с ней события");
+        }
         categoryRepository.deleteById(catId);
         log.info("Категория с id {} удалена", catId);
     }
