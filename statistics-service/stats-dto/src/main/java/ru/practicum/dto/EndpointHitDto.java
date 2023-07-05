@@ -22,6 +22,6 @@ public class EndpointHitDto {
     @NotBlank(message = "IP-адрес пользователя не может быть пустым или неопределенным")
     private String ip;
     @NotNull
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.DATE_TIME_PATTERN)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.PATTERN)
     private LocalDateTime timestamp;
 }

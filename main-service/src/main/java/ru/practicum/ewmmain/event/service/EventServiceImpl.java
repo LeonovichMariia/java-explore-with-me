@@ -284,7 +284,7 @@ public class EventServiceImpl implements EventService {
     }
 
     private long getViews(String uri, LocalDateTime from, LocalDateTime to) {
-        return Optional.ofNullable(client.getStats(from.format(Constants.DATE_TIME_FORMATTER), to.format(Constants.DATE_TIME_FORMATTER), List.of(uri), true))
+        return Optional.ofNullable(client.getStats(from.format(Constants.FORMATTER), to.format(Constants.FORMATTER), List.of(uri), true))
                 .map(ResponseEntity::getBody)
                 .stream()
                 .flatMap(Collection::stream)

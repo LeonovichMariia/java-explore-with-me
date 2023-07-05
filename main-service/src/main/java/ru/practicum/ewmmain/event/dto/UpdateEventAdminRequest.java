@@ -23,7 +23,7 @@ public class UpdateEventAdminRequest {
     private Long category;
     @Size(min = 20, max = 7000, message = "Описание должно содержать не менее 20 и не более 2000 символов")
     private String description;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.DATE_TIME_PATTERN)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.PATTERN)
     private LocalDateTime eventDate;
     private Location location;
     private Boolean paid;
