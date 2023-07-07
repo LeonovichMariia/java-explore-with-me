@@ -6,7 +6,7 @@ import ru.practicum.dto.EndpointHitDto;
 @UtilityClass
 public class EndpointHitMapper {
 
-    public static EndpointHit fromEndpointHitDto(EndpointHitDto endpointHitDto) {
+    public EndpointHit fromEndpointHitDto(EndpointHitDto endpointHitDto) {
         return EndpointHit.builder()
                 .ip(endpointHitDto.getIp())
                 .uri(endpointHitDto.getUri())

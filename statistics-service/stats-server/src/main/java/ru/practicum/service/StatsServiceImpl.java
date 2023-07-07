@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.practicum.dto.EndpointHitDto;
 import ru.practicum.dto.ViewStatsDto;
-import ru.practicum.exception.BadRequestException;
+import ru.practicum.exception.ValidationException;
 import ru.practicum.model.EndpointHit;
 import ru.practicum.model.EndpointHitMapper;
 import ru.practicum.model.ViewStats;
@@ -13,18 +13,14 @@ import ru.practicum.model.ViewStatsMapper;
 import ru.practicum.repository.EndpointHitsRepository;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static ru.practicum.dto.Constants.DATE_TIME_PATTERN;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class StatsServiceImpl implements StatsService {
     private final EndpointHitsRepository endpointHitsRepository;
-    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
 
     @Override
     public void addHit(EndpointHitDto endpointHitDto) {
@@ -33,10 +29,10 @@ public class StatsServiceImpl implements StatsService {
     }
 
     @Override
-    public List<ViewStatsDto> getStats(LocalDateTime start, LocalDateTime end, String[] uris, Boolean unique) {
+    public List<ViewStatsDto> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
         if (end.isBefore(start)) {
             log.error("Дата окончания не может быть ранее даты начала");
-            throw new BadRequestException("Дата окончания не может быть ранее даты начала");
+            throw new ValidationException("Дата окончания не может быть ранее даты начала");
         }
         List<ViewStats> result;
         if (uris == null) {
