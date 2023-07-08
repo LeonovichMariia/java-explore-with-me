@@ -9,7 +9,7 @@
 			"name": "Users",
 			"item": [
 				{
-					"name": "Добавление пользователя 1",
+					"name": "Добавление пользователя 136",
 					"event": [
 						{
 							"listen": "test",
@@ -45,7 +45,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"User1\",\r\n    \"email\":\"user1@hotmail.com\"\r\n}",
+							"raw": "{\r\n    \"name\":\"Mariia\",\r\n    \"email\":\"Mary@hotmail.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -66,7 +66,7 @@
 					"response": []
 				},
 				{
-					"name": "Добавление пользователя 2",
+					"name": "Добавление пользователя 137",
 					"event": [
 						{
 							"listen": "test",
@@ -102,7 +102,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"User2\",\r\n    \"email\":\"user2@hotmail.com\"\r\n}",
+							"raw": "{\r\n    \"name\":\"Mikhail\",\r\n    \"email\":\"Mishanya@hotmail.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -128,7 +128,7 @@
 			"name": "Events",
 			"item": [
 				{
-					"name": "Добавление категории",
+					"name": "Добавление категории 121",
 					"event": [
 						{
 							"listen": "test",
@@ -170,20 +170,77 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/admin/categories",
+							"raw": "{{baseUrl}}/admin/categories/",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"admin",
-								"categories"
+								"categories",
+								""
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Добавление события 1",
+					"name": "Добавление категории 122",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Ответ должен содержать код статуса 201 и данные в формате json\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"    pm.response.to.be.withBody;\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"const source = JSON.parse(pm.request.body.raw);\r",
+									"const target = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Категория должна содержать поля: id, name\", function () {\r",
+									"pm.expect(target).to.have.property('id');\r",
+									"pm.expect(target).to.have.property('name');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {\r",
+									"    pm.expect(target.id).to.not.be.null;\r",
+									"    pm.expect(source.name).equal(target.name, 'Название категории должно соответствовать отправленному в запросе');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Extreme\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/categories/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"categories",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Добавление события 106",
 					"event": [
 						{
 							"listen": "test",
@@ -236,7 +293,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"annotation\": \"Прыжок с парашютом с инструктором\",\r\n  \"category\": 1,\r\n  \"description\": \"В тандеме прыгают, как правило, с высоты четыре тысячи метров. Свободное падение длится около минуты, а затем пилот раскрывает парашют — крыло. Вы можете наслаждаться ощущениями и любоваться окрестностями.\",\r\n  \"eventDate\": \"2024-10-15 15:10:05\",\r\n  \"location\": {\r\n    \"lat\": 58.56,\r\n    \"lon\": 88.63\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 10,\r\n  \"requestModeration\": false,\r\n  \"title\": \"Прыжок с парашютом\"\r\n}",
+							"raw": "{\r\n  \"annotation\": \"Прыжок с парашютом с инструктором\",\r\n  \"category\": 122,\r\n  \"description\": \"В тандеме прыгают, как правило, с высоты четыре тысячи метров. Свободное падение длится около минуты, а затем пилот раскрывает парашют — крыло. Вы можете наслаждаться ощущениями и любоваться окрестностями.\",\r\n  \"eventDate\": \"2024-10-15 15:10:05\",\r\n  \"location\": {\r\n    \"lat\": 58.56,\r\n    \"lon\": 88.63\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 10,\r\n  \"requestModeration\": false,\r\n  \"title\": \"Прыжок с парашютом\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -258,7 +315,7 @@
 					"response": []
 				},
 				{
-					"name": "Добавление события 2",
+					"name": "Добавление события 107",
 					"event": [
 						{
 							"listen": "test",
@@ -311,7 +368,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"annotation\": \"Прогулки на сапах с инструктором\",\r\n  \"category\": 1,\r\n  \"description\": \"Сап-серфинг (SUP-серфинг) - это одна из разновидностей серфинга. Основное отличие САП-серфинга от обычного серфа, заключается в наличии у райдера специального весла, по средствам которого и осуществляется перемещение по воде. Доски для САПа обычно длиннее и шире стандартных досок для серфинга. САП-серфинг идеальная возможность стать ближе к миру больших волн в Российских условиях\",\r\n  \"eventDate\": \"2024-08-08 10:00:00\",\r\n  \"location\": {\r\n    \"lat\": 100.56,\r\n    \"lon\": 95.63\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 5,\r\n  \"requestModeration\": false,\r\n  \"title\": \"Сап-серфинг\"\r\n}",
+							"raw": "{\r\n  \"annotation\": \"Прогулки на сапах с инструктором\",\r\n  \"category\": 121,\r\n  \"description\": \"Сап-серфинг (SUP-серфинг) - это одна из разновидностей серфинга. Основное отличие САП-серфинга от обычного серфа, заключается в наличии у райдера специального весла, по средствам которого и осуществляется перемещение по воде. Доски для САПа обычно длиннее и шире стандартных досок для серфинга. САП-серфинг идеальная возможность стать ближе к миру больших волн в Российских условиях\",\r\n  \"eventDate\": \"2024-08-08 10:00:00\",\r\n  \"location\": {\r\n    \"lat\": 100.56,\r\n    \"lon\": 95.63\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 5,\r\n  \"requestModeration\": false,\r\n  \"title\": \"Сап-серфинг\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -341,7 +398,7 @@
 					"name": "Private",
 					"item": [
 						{
-							"name": "Добавление комментария к событию 1",
+							"name": "Добавление комментария к событию 106",
 							"event": [
 								{
 									"listen": "test",
@@ -404,11 +461,11 @@
 									"variable": [
 										{
 											"key": "userId",
-											"value": "1"
+											"value": "136"
 										},
 										{
 											"key": "eventId",
-											"value": "1"
+											"value": "106"
 										}
 									]
 								}
@@ -460,11 +517,11 @@
 									"variable": [
 										{
 											"key": "userId",
-											"value": "5"
+											"value": "999"
 										},
 										{
 											"key": "eventId",
-											"value": "1"
+											"value": "106"
 										}
 									]
 								}
@@ -516,11 +573,11 @@
 									"variable": [
 										{
 											"key": "userId",
-											"value": "1"
+											"value": "136"
 										},
 										{
 											"key": "eventId",
-											"value": "5"
+											"value": "999"
 										}
 									]
 								}
@@ -572,11 +629,11 @@
 									"variable": [
 										{
 											"key": "userId",
-											"value": "1"
+											"value": "136"
 										},
 										{
 											"key": "eventId",
-											"value": "1"
+											"value": "106"
 										}
 									]
 								}
@@ -628,11 +685,11 @@
 									"variable": [
 										{
 											"key": "userId",
-											"value": "1"
+											"value": "136"
 										},
 										{
 											"key": "eventId",
-											"value": "1"
+											"value": "106"
 										}
 									]
 								}
@@ -640,7 +697,7 @@
 							"response": []
 						},
 						{
-							"name": "Добавление комментария к событию 2",
+							"name": "Добавление комментария к событию 137",
 							"event": [
 								{
 									"listen": "test",
@@ -703,11 +760,11 @@
 									"variable": [
 										{
 											"key": "userId",
-											"value": "1"
+											"value": "136"
 										},
 										{
 											"key": "eventId",
-											"value": "2"
+											"value": "107"
 										}
 									]
 								}
@@ -776,7 +833,7 @@
 									"variable": [
 										{
 											"key": "userId",
-											"value": "1"
+											"value": "136"
 										},
 										{
 											"key": "commentId",
@@ -830,7 +887,7 @@
 									"variable": [
 										{
 											"key": "userId",
-											"value": "2"
+											"value": "137"
 										},
 										{
 											"key": "commentId",
@@ -884,7 +941,7 @@
 									"variable": [
 										{
 											"key": "userId",
-											"value": "1"
+											"value": "136"
 										},
 										{
 											"key": "commentId",
@@ -938,7 +995,7 @@
 									"variable": [
 										{
 											"key": "userId",
-											"value": "1"
+											"value": "136"
 										},
 										{
 											"key": "commentId",
@@ -992,11 +1049,11 @@
 									"variable": [
 										{
 											"key": "userId",
-											"value": "1"
+											"value": "136"
 										},
 										{
 											"key": "commentId",
-											"value": "5"
+											"value": "999"
 										}
 									]
 								}
@@ -1004,7 +1061,7 @@
 							"response": []
 						},
 						{
-							"name": "Обновление комментария нусуществующим пользователем",
+							"name": "Обновление комментария несуществующим пользователем",
 							"event": [
 								{
 									"listen": "test",
@@ -1046,7 +1103,7 @@
 									"variable": [
 										{
 											"key": "userId",
-											"value": "5"
+											"value": "999"
 										},
 										{
 											"key": "commentId",
@@ -1102,7 +1159,7 @@
 									"variable": [
 										{
 											"key": "userId",
-											"value": "1"
+											"value": "136"
 										},
 										{
 											"key": "commentId",
@@ -1147,11 +1204,11 @@
 									"variable": [
 										{
 											"key": "userId",
-											"value": "1"
+											"value": "136"
 										},
 										{
 											"key": "commentId",
-											"value": "5"
+											"value": "999"
 										}
 									]
 								}
@@ -1192,7 +1249,7 @@
 									"variable": [
 										{
 											"key": "userId",
-											"value": "5"
+											"value": "999"
 										},
 										{
 											"key": "commentId",
@@ -1204,7 +1261,7 @@
 							"response": []
 						},
 						{
-							"name": "Получение списка всех комментариев пользователя с id 1",
+							"name": "Получение списка всех комментариев пользователя с id 136",
 							"event": [
 								{
 									"listen": "test",
@@ -1243,7 +1300,7 @@
 									"variable": [
 										{
 											"key": "userId",
-											"value": "1"
+											"value": "136"
 										}
 									]
 								}
@@ -1251,7 +1308,7 @@
 							"response": []
 						},
 						{
-							"name": "Получение списка всех комментарией пользователя с id 2",
+							"name": "Получение списка всех комментарией пользователя с id 137",
 							"event": [
 								{
 									"listen": "test",
@@ -1290,7 +1347,7 @@
 									"variable": [
 										{
 											"key": "userId",
-											"value": "2"
+											"value": "137"
 										}
 									]
 								}
@@ -1331,7 +1388,7 @@
 									"variable": [
 										{
 											"key": "userId",
-											"value": "5"
+											"value": "999"
 										}
 									]
 								}
@@ -1339,7 +1396,7 @@
 							"response": []
 						},
 						{
-							"name": "Удаление комментария 2 пользователем 1",
+							"name": "Удаление комментария 2 пользователем 136",
 							"event": [
 								{
 									"listen": "test",
@@ -1370,7 +1427,7 @@
 									"variable": [
 										{
 											"key": "userId",
-											"value": "1"
+											"value": "136"
 										},
 										{
 											"key": "commentId",
@@ -1415,11 +1472,11 @@
 									"variable": [
 										{
 											"key": "userId",
-											"value": "1"
+											"value": "136"
 										},
 										{
 											"key": "commentId",
-											"value": "5"
+											"value": "999"
 										}
 									]
 								}
@@ -1460,7 +1517,7 @@
 									"variable": [
 										{
 											"key": "userId",
-											"value": "2"
+											"value": "137"
 										},
 										{
 											"key": "commentId",
@@ -1505,7 +1562,7 @@
 									"variable": [
 										{
 											"key": "userId",
-											"value": "1"
+											"value": "136"
 										},
 										{
 											"key": "commentId",
@@ -1560,7 +1617,7 @@
 									"variable": [
 										{
 											"key": "eventId",
-											"value": "1"
+											"value": "106"
 										}
 									]
 								}
@@ -1606,7 +1663,7 @@
 									"variable": [
 										{
 											"key": "eventId",
-											"value": "2"
+											"value": "107"
 										}
 									]
 								}
@@ -1757,7 +1814,7 @@
 									"variable": [
 										{
 											"key": "commentId",
-											"value": "5"
+											"value": "999"
 										}
 									]
 								}
