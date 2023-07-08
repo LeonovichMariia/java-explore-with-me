@@ -23,7 +23,7 @@ import java.util.List;
 public class CommentPrivateController {
     private final CommentService commentService;
 
-    @PostMapping("/{eventId}")
+    @PostMapping("/events/{eventId}")
     @ResponseStatus(HttpStatus.CREATED)
     public CommentDto addComment(@RequestBody @Valid NewCommentDto newCommentDto,
                                  @PathVariable Long userId, @PathVariable Long eventId) {
@@ -39,13 +39,12 @@ public class CommentPrivateController {
     }
 
     @GetMapping("/{commentId}")
-    public CommentDto getCommentById(@PathVariable Long userId,
-                                     @PathVariable Long commentId) {
+    public CommentDto getCommentById(@PathVariable Long userId, @PathVariable Long commentId) {
         log.info("Запрос на получение комментария с id {} от пользователя с id {}", commentId, userId);
         return commentService.getCommentById(userId, commentId);
     }
 
-    @GetMapping("/own")
+    @GetMapping
     public List<CommentDto> getAllUserComments(@PathVariable Long userId,
                                                @RequestParam(name = "size", defaultValue = "10") @Positive Integer size,
                                                @RequestParam(name = "from", defaultValue = "0") @PositiveOrZero Integer from) {

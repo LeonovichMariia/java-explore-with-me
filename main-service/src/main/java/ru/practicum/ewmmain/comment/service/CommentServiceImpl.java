@@ -109,8 +109,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentDto renewalCommentAdmin(Long userId, Long commentId, CommentDtoUpdate commentDtoUpdate) {
-        validateUser(userId);
+    public CommentDto renewalCommentAdmin(Long commentId, CommentDtoUpdate commentDtoUpdate) {
         Comment comment = validateComment(commentId);
         if (commentDtoUpdate.getText() != null) {
             comment.setText(commentDtoUpdate.getText());
@@ -122,14 +121,10 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void deleteCommentAdmin(Long commentId, Long userId) {
-        if (commentRepository.existsByIdAndAuthorId(commentId, userId)) {
-            commentRepository.deleteById(commentId);
-            log.info("Комментарий с id " + commentId + " от пользователя с id " + userId + " удален");
-        } else {
-            log.error("Комментарий с id " + commentId + " от пользователя с id " + userId + " не найден");
-            throw new NotFoundException("Комментарий с id " + commentId + " от пользователя с id " + userId + " не найден");
-        }
+    public void deleteCommentAdmin(Long commentId) {
+        validateComment(commentId);
+        commentRepository.deleteById(commentId);
+        log.info("Комментарий с id " + commentId + "удален");
     }
 
     private User validateUser(Long userId) {

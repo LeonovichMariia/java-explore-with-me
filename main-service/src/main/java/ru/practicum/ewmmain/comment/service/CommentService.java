@@ -12,7 +12,7 @@ public interface CommentService {
 
     CommentDto renewalComment(CommentDtoUpdate commentDtoUpdate, Long userId, Long commentId);
 
-    CommentDto getCommentById(Long userId, Long commentId);
+    CommentDto getCommentById(Long userId,  Long commentId);
 
     List<CommentDto> getAllUserComments(Long userId, Integer from, Integer size);
 
@@ -20,7 +20,7 @@ public interface CommentService {
 
     List<CommentDto> getAllCommentsForEvent(Long eventId, Integer from, Integer size);
 
-    CommentDto renewalCommentAdmin(Long userId, Long commentId, CommentDtoUpdate updateComment);
+    CommentDto renewalCommentAdmin(Long commentId, CommentDtoUpdate updateComment);
 
-    void deleteCommentAdmin(Long commentId, Long userId);
+    void deleteCommentAdmin(Long commentId);
 }

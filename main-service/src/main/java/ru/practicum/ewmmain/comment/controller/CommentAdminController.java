@@ -15,23 +15,21 @@ import javax.validation.Valid;
 @Validated
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "/admin/users")
+@RequestMapping(path = "/admin/comments")
 public class CommentAdminController {
     private final CommentService commentService;
 
-    @PatchMapping("{userId}/comments/{commentId}")
+    @PatchMapping("/{commentId}")
     public CommentDto renewalCommentAdmin(@RequestBody @Valid CommentDtoUpdate updateComment,
-                                          @PathVariable Long userId,
                                           @PathVariable Long commentId) {
-        log.info("Запрос на обновление комментария с id {} от пользователя с id {} администратором", userId, commentId);
-        return commentService.renewalCommentAdmin(userId, commentId, updateComment);
+        log.info("Запрос на обновление комментария с id {} администратором", commentId);
+        return commentService.renewalCommentAdmin(commentId, updateComment);
     }
 
-    @DeleteMapping("{userId}/comments/{commentId}")
+    @DeleteMapping("/{commentId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCommentAdmin(@PathVariable Long userId,
-                                   @PathVariable Long commentId) {
-        log.info("Запрос на удаление комментария с id {} от пользователя с id {} администратором", userId, commentId);
-        commentService.deleteCommentAdmin(commentId, userId);
+    public void deleteCommentAdmin(@PathVariable Long commentId) {
+        log.info("Запрос на удаление комментария с id {} администратором", commentId);
+        commentService.deleteCommentAdmin(commentId);
     }
 }
