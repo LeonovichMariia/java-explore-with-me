@@ -389,15 +389,27 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/users/1/comments/1",
+									"raw": "{{baseUrl}}/users/:userId/comments/events/:eventId/",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
-										"1",
+										":userId",
 										"comments",
-										"1"
+										"events",
+										":eventId",
+										""
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "1"
+										},
+										{
+											"key": "eventId",
+											"value": "1"
+										}
 									]
 								}
 							},
@@ -433,15 +445,27 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/users/5/comments/1",
+									"raw": "{{baseUrl}}/users/:userId/comments/events/:eventId/",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
-										"5",
+										":userId",
 										"comments",
-										"1"
+										"events",
+										":eventId",
+										""
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "5"
+										},
+										{
+											"key": "eventId",
+											"value": "1"
+										}
 									]
 								}
 							},
@@ -477,15 +501,27 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/users/1/comments/5",
+									"raw": "{{baseUrl}}/users/:userId/events/:eventId/comments/",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
-										"1",
+										":userId",
+										"events",
+										":eventId",
 										"comments",
-										"5"
+										""
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "1"
+										},
+										{
+											"key": "eventId",
+											"value": "5"
+										}
 									]
 								}
 							},
@@ -521,15 +557,27 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/users/1/comments/1",
+									"raw": "{{baseUrl}}/users/:userId/comments/events/:eventId/",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
-										"1",
+										":userId",
 										"comments",
-										"1"
+										"events",
+										":eventId",
+										""
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "1"
+										},
+										{
+											"key": "eventId",
+											"value": "1"
+										}
 									]
 								}
 							},
@@ -565,15 +613,27 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/users/1/comments/1",
+									"raw": "{{baseUrl}}/users/:userId/comments/events/:eventId/",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
-										"1",
+										":userId",
 										"comments",
-										"1"
+										"events",
+										":eventId",
+										""
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "1"
+										},
+										{
+											"key": "eventId",
+											"value": "1"
+										}
 									]
 								}
 							},
@@ -628,15 +688,27 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/users/1/comments/2",
+									"raw": "{{baseUrl}}/users/:userId/comments/events/:eventId/",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
-										"1",
+										":userId",
 										"comments",
-										"2"
+										"events",
+										":eventId",
+										""
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "1"
+										},
+										{
+											"key": "eventId",
+											"value": "2"
+										}
 									]
 								}
 							},
@@ -691,15 +763,25 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/users/1/comments/1",
+									"raw": "{{baseUrl}}/users/:userId/comments/:commentId",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
-										"1",
+										":userId",
 										"comments",
-										"1"
+										":commentId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "1"
+										},
+										{
+											"key": "commentId",
+											"value": "1"
+										}
 									]
 								}
 							},
@@ -735,15 +817,25 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/users/2/comments/1",
+									"raw": "{{baseUrl}}/users/:userId/comments/:commentId",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
-										"2",
+										":userId",
 										"comments",
-										"1"
+										":commentId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "2"
+										},
+										{
+											"key": "commentId",
+											"value": "1"
+										}
 									]
 								}
 							},
@@ -779,15 +871,25 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/users/1/comments/1",
+									"raw": "{{baseUrl}}/users/:userId/comments/:commentId",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
-										"1",
+										":userId",
 										"comments",
-										"1"
+										":commentId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "1"
+										},
+										{
+											"key": "commentId",
+											"value": "1"
+										}
 									]
 								}
 							},
@@ -823,15 +925,25 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/users/1/comments/1",
+									"raw": "{{baseUrl}}/users/:userId/comments/:commentId",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
-										"1",
+										":userId",
 										"comments",
-										"1"
+										":commentId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "1"
+										},
+										{
+											"key": "commentId",
+											"value": "1"
+										}
 									]
 								}
 							},
@@ -867,15 +979,25 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/users/1/comments/5",
+									"raw": "{{baseUrl}}/users/:userId/comments/:commentId",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
-										"1",
+										":userId",
 										"comments",
-										"5"
+										":commentId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "1"
+										},
+										{
+											"key": "commentId",
+											"value": "5"
+										}
 									]
 								}
 							},
@@ -911,15 +1033,25 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/users/5/comments/1",
+									"raw": "{{baseUrl}}/users/:userId/comments/:commentId",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
-										"5",
+										":userId",
 										"comments",
-										"1"
+										":commentId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "5"
+										},
+										{
+											"key": "commentId",
+											"value": "1"
+										}
 									]
 								}
 							},
@@ -957,15 +1089,25 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/users/1/comments/1",
+									"raw": "{{baseUrl}}/users/:userId/comments/:commentId",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
-										"1",
+										":userId",
 										"comments",
-										"1"
+										":commentId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "1"
+										},
+										{
+											"key": "commentId",
+											"value": "1"
+										}
 									]
 								}
 							},
@@ -992,15 +1134,25 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/users/1/comments/5",
+									"raw": "{{baseUrl}}/users/:userId/comments/:commentId",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
-										"1",
+										":userId",
 										"comments",
-										"5"
+										":commentId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "1"
+										},
+										{
+											"key": "commentId",
+											"value": "5"
+										}
 									]
 								}
 							},
@@ -1027,22 +1179,32 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/users/5/comments/1",
+									"raw": "{{baseUrl}}/users/:userId/comments/:commentId",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
-										"5",
+										":userId",
 										"comments",
-										"1"
+										":commentId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "5"
+										},
+										{
+											"key": "commentId",
+											"value": "1"
+										}
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "Получение списка всех комментарией пользователя с id 1",
+							"name": "Получение списка всех комментариев пользователя с id 1",
 							"event": [
 								{
 									"listen": "test",
@@ -1068,15 +1230,21 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/users/1/comments/own",
+									"raw": "{{baseUrl}}/users/:userId/comments/",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
-										"1",
+										":userId",
 										"comments",
-										"own"
+										""
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "1"
+										}
 									]
 								}
 							},
@@ -1109,15 +1277,21 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/users/2/comments/own",
+									"raw": "{{baseUrl}}/users/:userId/comments/",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
-										"2",
+										":userId",
 										"comments",
-										"own"
+										""
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "2"
+										}
 									]
 								}
 							},
@@ -1144,15 +1318,21 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/users/5/comments/own",
+									"raw": "{{baseUrl}}/users/:userId/comments/",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
-										"5",
+										":userId",
 										"comments",
-										"own"
+										""
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "5"
+										}
 									]
 								}
 							},
@@ -1177,15 +1357,25 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/users/1/comments/2",
+									"raw": "{{baseUrl}}/users/:userId/comments/:commentId",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
-										"1",
+										":userId",
 										"comments",
-										"2"
+										":commentId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "1"
+										},
+										{
+											"key": "commentId",
+											"value": "2"
+										}
 									]
 								}
 							},
@@ -1212,15 +1402,25 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/users/1/comments/5",
+									"raw": "{{baseUrl}}/users/:userId/comments/:commentId",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
-										"1",
+										":userId",
 										"comments",
-										"5"
+										":commentId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "1"
+										},
+										{
+											"key": "commentId",
+											"value": "5"
+										}
 									]
 								}
 							},
@@ -1247,15 +1447,25 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/users/2/comments/1",
+									"raw": "{{baseUrl}}/users/:userId/comments/:commentId",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
-										"2",
+										":userId",
 										"comments",
-										"1"
+										":commentId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "2"
+										},
+										{
+											"key": "commentId",
+											"value": "1"
+										}
 									]
 								}
 							},
@@ -1282,15 +1492,25 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/users/1/comments/2",
+									"raw": "{{baseUrl}}/users/:userId/comments/:commentId",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"users",
-										"1",
+										":userId",
 										"comments",
-										"2"
+										":commentId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "1"
+										},
+										{
+											"key": "commentId",
+											"value": "2"
+										}
 									]
 								}
 							},
@@ -1328,14 +1548,20 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/events/1/comments",
+									"raw": "{{baseUrl}}/events/:eventId/comments",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"events",
-										"1",
+										":eventId",
 										"comments"
+									],
+									"variable": [
+										{
+											"key": "eventId",
+											"value": "1"
+										}
 									]
 								}
 							},
@@ -1368,14 +1594,20 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/events/2/comments",
+									"raw": "{{baseUrl}}/events/:eventId/comments",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"events",
-										"2",
+										":eventId",
 										"comments"
+									],
+									"variable": [
+										{
+											"key": "eventId",
+											"value": "2"
+										}
 									]
 								}
 							},
@@ -1435,16 +1667,20 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/admin/users/1/comments/1",
+									"raw": "{{baseUrl}}/admin/comments/:commentId",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"admin",
-										"users",
-										"1",
 										"comments",
-										"1"
+										":commentId"
+									],
+									"variable": [
+										{
+											"key": "commentId",
+											"value": "1"
+										}
 									]
 								}
 							},
@@ -1469,16 +1705,20 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/admin/users/1/comments/1",
+									"raw": "{{baseUrl}}/admin/comments/:commentId",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"admin",
-										"users",
-										"1",
 										"comments",
-										"1"
+										":commentId"
+									],
+									"variable": [
+										{
+											"key": "commentId",
+											"value": "1"
+										}
 									]
 								}
 							},
@@ -1505,16 +1745,20 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/admin/users/1/comments/5",
+									"raw": "{{baseUrl}}/admin/comments/:commentId",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"admin",
-										"users",
-										"1",
 										"comments",
-										"5"
+										":commentId"
+									],
+									"variable": [
+										{
+											"key": "commentId",
+											"value": "5"
+										}
 									]
 								}
 							},
