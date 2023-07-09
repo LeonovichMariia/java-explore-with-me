@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewmmain.comment.CommentStatus;
 import ru.practicum.ewmmain.comment.dto.CommentDto;
-import ru.practicum.ewmmain.comment.dto.CommentDtoUpdate;
 import ru.practicum.ewmmain.comment.dto.NewCommentDto;
 import ru.practicum.ewmmain.comment.mapper.CommentMapper;
 import ru.practicum.ewmmain.comment.model.Comment;
@@ -47,15 +46,15 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentDto renewalComment(CommentDtoUpdate commentDtoUpdate, Long userId, Long commentId) {
+    public CommentDto renewalComment(NewCommentDto newCommentDto, Long userId, Long commentId) {
         Comment comment = validateComment(commentId);
         validateUser(userId);
         if (!comment.getAuthor().getId().equals(userId)) {
             log.error("Только автор или администратор может обновить комментарий");
             throw new ConflictException("Только автор или администратор может обновить комментарий");
         }
-        if (commentDtoUpdate.getText() != null) {
-            comment.setText(commentDtoUpdate.getText());
+        if (newCommentDto.getText() != null) {
+            comment.setText(newCommentDto.getText());
         }
         comment.setStatus(CommentStatus.PENDING);
         CommentDto updatedComment = CommentMapper.toCommentDto(commentRepository.save(comment));
@@ -109,10 +108,10 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentDto renewalCommentAdmin(Long commentId, CommentDtoUpdate commentDtoUpdate) {
+    public CommentDto renewalCommentAdmin(Long commentId, NewCommentDto newCommentDto) {
         Comment comment = validateComment(commentId);
-        if (commentDtoUpdate.getText() != null) {
-            comment.setText(commentDtoUpdate.getText());
+        if (newCommentDto.getText() != null) {
+            comment.setText(newCommentDto.getText());
         }
         comment.setStatus(CommentStatus.PUBLISHED);
         CommentDto updatedComment = CommentMapper.toCommentDto(commentRepository.save(comment));
@@ -124,7 +123,7 @@ public class CommentServiceImpl implements CommentService {
     public void deleteCommentAdmin(Long commentId) {
         validateComment(commentId);
         commentRepository.deleteById(commentId);
-        log.info("Комментарий с id " + commentId + "удален");
+        log.info("Комментарий с id {} удален", commentId);
     }
 
     private User validateUser(Long userId) {

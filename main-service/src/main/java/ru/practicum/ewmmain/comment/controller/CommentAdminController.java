@@ -6,8 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewmmain.comment.dto.CommentDto;
-import ru.practicum.ewmmain.comment.dto.CommentDtoUpdate;
+import ru.practicum.ewmmain.comment.dto.NewCommentDto;
 import ru.practicum.ewmmain.comment.service.CommentService;
+import ru.practicum.ewmmain.utils.Marker;
 
 import javax.validation.Valid;
 
@@ -20,10 +21,11 @@ public class CommentAdminController {
     private final CommentService commentService;
 
     @PatchMapping("/{commentId}")
-    public CommentDto renewalCommentAdmin(@RequestBody @Valid CommentDtoUpdate updateComment,
+    @Validated({Marker.OnUpdate.class})
+    public CommentDto renewalCommentAdmin(@RequestBody @Valid NewCommentDto newCommentDto,
                                           @PathVariable Long commentId) {
         log.info("Запрос на обновление комментария с id {} администратором", commentId);
-        return commentService.renewalCommentAdmin(commentId, updateComment);
+        return commentService.renewalCommentAdmin(commentId, newCommentDto);
     }
 
     @DeleteMapping("/{commentId}")

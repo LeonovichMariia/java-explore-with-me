@@ -44,6 +44,4 @@ public class ErrorHandler {
         return Map.of("error", "Некорректные параметры запроса",
                 "errorMessage", e.getMessage());
     }
-
-
 }

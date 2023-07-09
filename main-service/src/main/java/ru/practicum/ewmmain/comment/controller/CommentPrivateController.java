@@ -6,9 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewmmain.comment.dto.CommentDto;
-import ru.practicum.ewmmain.comment.dto.CommentDtoUpdate;
 import ru.practicum.ewmmain.comment.dto.NewCommentDto;
 import ru.practicum.ewmmain.comment.service.CommentService;
+import ru.practicum.ewmmain.utils.Marker;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -25,6 +25,7 @@ public class CommentPrivateController {
 
     @PostMapping("/events/{eventId}")
     @ResponseStatus(HttpStatus.CREATED)
+    @Validated({Marker.OnCreate.class})
     public CommentDto addComment(@RequestBody @Valid NewCommentDto newCommentDto,
                                  @PathVariable Long userId, @PathVariable Long eventId) {
         log.info("Запрос на добавление комментария о событии с id {} от пользователя с id {}", eventId, userId);
@@ -32,10 +33,11 @@ public class CommentPrivateController {
     }
 
     @PatchMapping("/{commentId}")
-    public CommentDto renewalComment(@RequestBody @Valid CommentDtoUpdate commentDtoUpdate,
+    @Validated({Marker.OnUpdate.class})
+    public CommentDto renewalComment(@RequestBody @Valid NewCommentDto newCommentDto,
                                      @PathVariable Long userId, @PathVariable Long commentId) {
         log.info("Запрос на обновление комментария о событии с id {} от пользователя с id {}", commentId, userId);
-        return commentService.renewalComment(commentDtoUpdate, userId, commentId);
+        return commentService.renewalComment(newCommentDto, userId, commentId);
     }
 
     @GetMapping("/{commentId}")
