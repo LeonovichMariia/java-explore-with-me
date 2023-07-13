@@ -10,10 +10,7 @@ import ru.practicum.ewmmain.comment.dto.NewCommentDto;
 import ru.practicum.ewmmain.comment.service.CommentService;
 import ru.practicum.ewmmain.utils.Marker;
 
-import javax.validation.Valid;
-
 @Slf4j
-@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/admin/comments")
@@ -22,7 +19,7 @@ public class CommentAdminController {
 
     @PatchMapping("/{commentId}")
     @Validated({Marker.OnUpdate.class})
-    public CommentDto renewalCommentAdmin(@RequestBody @Valid NewCommentDto newCommentDto,
+    public CommentDto renewalCommentAdmin(@RequestBody NewCommentDto newCommentDto,
                                           @PathVariable Long commentId) {
         log.info("Запрос на обновление комментария с id {} администратором", commentId);
         return commentService.renewalCommentAdmin(commentId, newCommentDto);
